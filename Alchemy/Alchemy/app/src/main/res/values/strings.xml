@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Alchemy</string>
+    <string name="main_activity_date_menu_item_default_text">Date</string>
 </resources>
