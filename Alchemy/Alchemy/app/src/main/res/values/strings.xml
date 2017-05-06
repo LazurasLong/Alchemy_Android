@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Alchemy</string>
     <string name="main_activity_date_menu_item_default_text">Date</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
