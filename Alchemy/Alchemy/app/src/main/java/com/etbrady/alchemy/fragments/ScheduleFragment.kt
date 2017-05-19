@@ -1,10 +1,12 @@
-package com.etbrady.alchemy
+package com.etbrady.alchemy.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.etbrady.alchemy.R
+import kotlinx.android.synthetic.main.fragment_schedule.*
 import java.util.*
 
 
@@ -22,7 +24,9 @@ class ScheduleFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater!!.inflate(R.layout.fragment_schedule, container, false)
+        val view = inflater!!.inflate(R.layout.fragment_schedule, container, false)
+        //date_textview.text = date.toString()
+        return view
     }
 
     companion object {
