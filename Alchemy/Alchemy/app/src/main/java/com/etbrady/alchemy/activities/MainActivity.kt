@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.view.Menu
 import android.view.MenuItem
 import com.etbrady.alchemy.R
+import com.etbrady.alchemy.fragments.DateListener
 import com.etbrady.alchemy.fragments.ScheduleFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
@@ -45,7 +46,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun dateMenuItemClicked(item: MenuItem): Boolean {
-
         val calendar = Calendar.getInstance()
         calendar.time = selectedDate
         val year = calendar.get(Calendar.YEAR)
@@ -59,6 +59,12 @@ class MainActivity : AppCompatActivity() {
             selectedDate = selectedCalendar.time
             val selectedDateText = menuDateFormat.format(selectedCalendar.time)
             item.title = selectedDateText
+
+            supportFragmentManager.fragments.forEach {
+                if (it is DateListener) {
+                    it.setDate(selectedDate)
+                }
+            }
 
         }, year, month, dayOfMonth)
 

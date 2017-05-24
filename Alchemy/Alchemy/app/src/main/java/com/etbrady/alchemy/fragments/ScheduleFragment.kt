@@ -8,28 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import com.etbrady.alchemy.R
 import com.etbrady.alchemy.adapters.ClassAdapter
-import com.etbrady.alchemy.apis.AlchemyAPI
+import com.etbrady.alchemy.apis.AlchemyAPIFactory
 import com.etbrady.alchemy.models.Class
-import com.google.gson.GsonBuilder
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.text.SimpleDateFormat
-import java.util.*
-import com.github.salomonbrys.kotson.*
 import kotlinx.android.synthetic.main.fragment_schedule.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
-class ScheduleFragment : Fragment() {
+class ScheduleFragment : Fragment(), DateListener {
 
     private var date: Date? = null
-    private val alchemyAPI: AlchemyAPI
     private val classAdapter = ClassAdapter()
-
-    init {
-        alchemyAPI = createAlchemyAPI()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,9 +29,13 @@ class ScheduleFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadClasses()
+    }
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         val view = inflater!!.inflate(R.layout.fragment_schedule, container, false)
 
         val classesRecyclerView = view.classes_recycler_view
@@ -51,8 +46,17 @@ class ScheduleFragment : Fragment() {
 
         classesRecyclerView.adapter = classAdapter
 
+        return view
+    }
 
+    override fun setDate(date: Date) {
+        this.date = date
+        loadClasses()
+    }
+
+    private fun loadClasses() {
         val currentDateStringPair = getCurrentDateStringPair()
+        val alchemyAPI = AlchemyAPIFactory.createAlchemyAPIInstance(context)
         val call = alchemyAPI.getClasses(currentDateStringPair.first, currentDateStringPair.second)
         call.enqueue(object: Callback<List<Class>> {
             override fun onResponse(call: Call<List<Class>>?, response: Response<List<Class>>?) {
@@ -63,7 +67,6 @@ class ScheduleFragment : Fragment() {
                 print("On Failure!")
             }
         })
-        return view
     }
 
     private fun getCurrentDateStringPair(): Pair<String,String> {
@@ -81,43 +84,10 @@ class ScheduleFragment : Fragment() {
         calendar.set(Calendar.SECOND, second)
 
         val date = calendar.time
-        val dateFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'", Locale.US)
+        val dateFormatter = SimpleDateFormat(getString(R.string.alchemy_date_format), Locale.US)
 
         return dateFormatter.format(date)
     }
-
-    private fun createAlchemyAPI(): AlchemyAPI {
-
-        val gson = GsonBuilder()
-                .registerTypeAdapter<List<Class>> {
-                    deserialize({
-                        val dateFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:sss'Z'", Locale.US)
-                        it.json["event_occurrences"].asJsonArray.map {
-                            val name = it["name"].asString
-                            val startDate = dateFormatter.parse(it["start_at"].asString)
-                            val endDate = dateFormatter.parse(it["end_at"].asString)
-                            val locationId = it["location_id"].asInt
-                            val instructors = it["staff_members"].asJsonArray
-                            val instructorName = if (instructors.size() > 0) {
-                                instructors[0]["name"].asString
-                            } else {
-                                ""
-                            }
-                            Class(name, startDate, endDate, locationId, instructorName)
-                        }
-                    })
-
-                }
-                .create()
-
-        val retrofit = Retrofit.Builder()
-                .baseUrl("https://alchemy365.frontdeskhq.com/api/v2/")
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
-
-        return retrofit.create(AlchemyAPI::class.java)
-    }
-
 
     companion object {
 
