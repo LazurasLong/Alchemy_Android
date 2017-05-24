@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:background="@color/colorSecondaryLight"
         android:paddingTop="4dp"
-        android:paddingBottom="4dp"/>
+        android:paddingBottom="4dp"
+        />
 
 </FrameLayout>
