@@ -24,7 +24,7 @@ class Class (
     }
 
     private fun formatDate(date: Date): String {
-        val dateFormatter = SimpleDateFormat("h mm a", Locale.US)
+        val dateFormatter = SimpleDateFormat("h:mm a", Locale.US)
         return dateFormatter.format(date)
     }
 }

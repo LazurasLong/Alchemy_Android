@@ -5,40 +5,22 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:cardCornerRadius="4dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginBottom="8dp" >
+    android:layout_marginBottom="4dp" >
 
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:rowCount="2"
         android:columnCount="2"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="4dp">
 
         <TextView
             android:id="@+id/name_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
+            android:textColor="@color/colorPrimary"
             android:layout_gravity="top|start"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/instructorName_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"/>
-
-        <TextView
-            android:id="@+id/time_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start"
-            android:textColor="@android:color/black"
             android:textSize="18sp" />
 
         <TextView
@@ -46,8 +28,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
+            android:textColor="@color/colorSecondary"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/time_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:textColor="@color/colorSecondary"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/instructorName_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:textColor="@color/colorSecondaryLight"
+            android:textSize="14sp"/>
 
     </GridLayout>
 
