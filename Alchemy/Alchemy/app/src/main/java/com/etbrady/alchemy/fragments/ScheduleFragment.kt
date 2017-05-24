@@ -55,12 +55,16 @@ class ScheduleFragment : Fragment(), DateListener {
     }
 
     private fun loadClasses() {
-        val currentDateStringPair = getCurrentDateStringPair()
+        val currentDateStringPair = getSetDateStringPair()
         val alchemyAPI = AlchemyAPIFactory.createAlchemyAPIInstance(context)
         val call = alchemyAPI.getClasses(currentDateStringPair.first, currentDateStringPair.second)
         call.enqueue(object: Callback<List<Class>> {
             override fun onResponse(call: Call<List<Class>>?, response: Response<List<Class>>?) {
-                classAdapter.setClasses(response!!.body())
+                if (response != null) {
+                    val classes = response.body()
+                    val sortedClasses = classes.sortedBy { it.startDate }
+                    classAdapter.setClasses(sortedClasses)
+                }
             }
 
             override fun onFailure(call: Call<List<Class>>?, t: Throwable?) {
@@ -69,9 +73,9 @@ class ScheduleFragment : Fragment(), DateListener {
         })
     }
 
-    private fun getCurrentDateStringPair(): Pair<String,String> {
+    private fun getSetDateStringPair(): Pair<String,String> {
         val calendar = Calendar.getInstance()
-
+        calendar.timeInMillis = date?.time ?: calendar.timeInMillis
         val startDateString = getDateString(calendar, 0, 0, 0)
         val endDateString = getDateString(calendar, 23, 59, 59)
 

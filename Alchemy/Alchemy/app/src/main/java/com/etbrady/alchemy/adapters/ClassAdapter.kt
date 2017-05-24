@@ -36,6 +36,13 @@ class ClassAdapter: RecyclerView.Adapter<ClassAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindClass(c: Class) {
             itemView.name_textView.text = c.name
+            itemView.instructorName_textView.text = c.instructorName
+            itemView.time_textView.text = getFormattedTime(c)
+            itemView.location_textView.text = c.getLocationName()
+        }
+
+        private fun getFormattedTime(c: Class): String {
+            return c.getStartDateString() + " - " + c.getEndDateString()
         }
     }
 }

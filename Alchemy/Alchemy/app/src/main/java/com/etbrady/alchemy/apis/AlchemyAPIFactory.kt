@@ -34,6 +34,7 @@ class AlchemyAPIFactory {
 
         private fun deserializeClassList(deserializerArg: DeserializerArg, context: Context): List<Class> {
             val dateFormatter = SimpleDateFormat(context.getString(R.string.alchemy_date_format), Locale.US)
+            dateFormatter.timeZone = TimeZone.getTimeZone("UTC")
             return deserializerArg.json["event_occurrences"].asJsonArray.map {
                 val name = it["name"].asString
                 val startDate = dateFormatter.parse(it["start_at"].asString)
