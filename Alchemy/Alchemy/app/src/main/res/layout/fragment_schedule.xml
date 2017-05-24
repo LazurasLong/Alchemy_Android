@@ -9,7 +9,7 @@
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#262626"
+        android:background="@color/colorSecondaryLight"
         android:paddingTop="4dp"
         android:paddingBottom="4dp"/>
 

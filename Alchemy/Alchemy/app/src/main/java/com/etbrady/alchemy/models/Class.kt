@@ -7,13 +7,9 @@ class Class (
         val name: String,
         val startDate: Date,
         val endDate: Date,
-        val locationId: Int,
+        val locationName: String,
         val instructorName: String
 )  {
-
-    fun getLocationName(): String {
-        return "Alchemy North Loop"
-    }
 
     fun getStartDateString(): String {
         return formatDate(startDate)

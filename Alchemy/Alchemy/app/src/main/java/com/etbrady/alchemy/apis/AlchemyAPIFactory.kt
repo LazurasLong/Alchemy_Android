@@ -40,13 +40,19 @@ class AlchemyAPIFactory {
                 val startDate = dateFormatter.parse(it["start_at"].asString)
                 val endDate = dateFormatter.parse(it["end_at"].asString)
                 val locationId = it["location_id"].asInt
+                val locationName = when (locationId) {
+                    10514 -> "Alchemy North Loop"
+                    18997 -> "Alchemy Northeast"
+                    27577 -> "Alchemy Edina"
+                    else -> ""
+                }
                 val instructors = it["staff_members"].asJsonArray
                 val instructorName = if (instructors.size() > 0) {
                     instructors[0]["name"].asString
                 } else {
                     ""
                 }
-                Class(name, startDate, endDate, locationId, instructorName)
+                Class(name, startDate, endDate, locationName, instructorName)
             }
         }
     }

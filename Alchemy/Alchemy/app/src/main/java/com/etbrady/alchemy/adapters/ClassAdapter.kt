@@ -38,7 +38,7 @@ class ClassAdapter: RecyclerView.Adapter<ClassAdapter.ViewHolder>() {
             itemView.name_textView.text = c.name
             itemView.instructorName_textView.text = c.instructorName
             itemView.time_textView.text = getFormattedTime(c)
-            itemView.location_textView.text = c.getLocationName()
+            itemView.location_textView.text = c.locationName
         }
 
         private fun getFormattedTime(c: Class): String {
