@@ -32,7 +32,6 @@ class ClassAdapter: RecyclerView.Adapter<ClassAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindClass(c: Class) {
             itemView.name_textView.text = c.name
