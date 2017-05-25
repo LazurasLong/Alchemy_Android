@@ -11,6 +11,7 @@ import android.view.MenuItem
 import com.etbrady.alchemy.R
 import com.etbrady.alchemy.fragments.DateListener
 import com.etbrady.alchemy.fragments.ScheduleFragment
+import com.etbrady.alchemy.fragments.WorkoutFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -77,18 +78,20 @@ class MainActivity : AppCompatActivity() {
         override fun getItem(position: Int): Fragment {
             when (position) {
                 0 -> return ScheduleFragment.newInstance(selectedDate)
+                1 -> return WorkoutFragment.newInstance(selectedDate)
             }
 
             return Fragment()
         }
 
         override fun getCount(): Int {
-            return 1
+            return 2
         }
 
         override fun getPageTitle(position: Int): CharSequence? {
             when(position) {
                 0 -> return "Schedule"
+                1 -> return "Workouts"
             }
 
             return null

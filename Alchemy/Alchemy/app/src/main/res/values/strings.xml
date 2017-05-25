@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Alchemy</string>
     <string name="main_activity_date_menu_item_default_text">Date</string>
-    <string name="alchemy_base_url">https://alchemy365.frontdeskhq.com/api/v2/</string>
+    <string name="alchemy_front_desk_base_url">https://alchemy365.frontdeskhq.com/api/v2/</string>
+    <string name="alchemy_base_url">https://alchemy365.com/</string>
     <string name="alchemy_date_format">yyyy-MM-dd\'T\'HH:mm:ss</string>
 </resources>

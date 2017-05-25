@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.etbrady.alchemy.R
 import com.etbrady.alchemy.adapters.ClassAdapter
-import com.etbrady.alchemy.apis.AlchemyAPIFactory
+import com.etbrady.alchemy.apis.AlchemyFrontDeskAPIFactory
 import com.etbrady.alchemy.models.Class
 import kotlinx.android.synthetic.main.fragment_schedule.view.*
 import retrofit2.Call
@@ -56,7 +56,7 @@ class ScheduleFragment : Fragment(), DateListener {
 
     private fun loadClasses() {
         val currentDateStringPair = getSetDateStringPair()
-        val alchemyAPI = AlchemyAPIFactory.createAlchemyAPIInstance(context)
+        val alchemyAPI = AlchemyFrontDeskAPIFactory.createAlchemyFrontDeskAPIInstance(context)
         val call = alchemyAPI.getClasses(currentDateStringPair.first, currentDateStringPair.second)
         call.enqueue(object: Callback<List<Class>> {
             override fun onResponse(call: Call<List<Class>>?, response: Response<List<Class>>?) {
