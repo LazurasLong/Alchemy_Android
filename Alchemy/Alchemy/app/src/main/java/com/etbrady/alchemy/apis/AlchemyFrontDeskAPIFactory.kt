@@ -1,9 +1,8 @@
 package com.etbrady.alchemy.apis
 
 import android.content.Context
-import android.content.res.Resources
 import com.etbrady.alchemy.R
-import com.etbrady.alchemy.models.Class
+import com.etbrady.alchemy.models.Event
 import com.github.salomonbrys.kotson.DeserializerArg
 import com.github.salomonbrys.kotson.get
 import com.github.salomonbrys.kotson.registerTypeAdapter
@@ -17,7 +16,7 @@ class AlchemyFrontDeskAPIFactory {
     companion object {
         fun createAlchemyFrontDeskAPIInstance(context: Context): AlchemyFrontDeskAPI {
             val gson = GsonBuilder()
-                    .registerTypeAdapter<List<Class>> {
+                    .registerTypeAdapter<List<Event>> {
                         deserialize({
                             deserializeClassList(it, context)
                         })
@@ -32,7 +31,7 @@ class AlchemyFrontDeskAPIFactory {
             return retrofit.create(AlchemyFrontDeskAPI::class.java)
         }
 
-        private fun deserializeClassList(deserializerArg: DeserializerArg, context: Context): List<Class> {
+        private fun deserializeClassList(deserializerArg: DeserializerArg, context: Context): List<Event> {
             val dateFormatter = SimpleDateFormat(context.getString(R.string.alchemy_date_format), Locale.US)
             dateFormatter.timeZone = TimeZone.getTimeZone("UTC")
             return deserializerArg.json["event_occurrences"].asJsonArray.map {
@@ -52,7 +51,7 @@ class AlchemyFrontDeskAPIFactory {
                 } else {
                     ""
                 }
-                Class(name, startDate, endDate, locationName, instructorName)
+                Event(name, startDate, endDate, locationName, instructorName)
             }
         }
     }

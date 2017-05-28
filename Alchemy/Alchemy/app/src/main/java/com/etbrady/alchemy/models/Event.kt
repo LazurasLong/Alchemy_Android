@@ -3,7 +3,7 @@ package com.etbrady.alchemy.models
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Class (
+class Event(
         val name: String,
         val startDate: Date,
         val endDate: Date,

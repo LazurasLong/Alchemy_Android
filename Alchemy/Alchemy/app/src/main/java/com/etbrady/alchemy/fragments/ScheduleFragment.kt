@@ -7,9 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.etbrady.alchemy.R
-import com.etbrady.alchemy.adapters.ClassAdapter
+import com.etbrady.alchemy.adapters.EventAdapter
 import com.etbrady.alchemy.apis.AlchemyFrontDeskAPIFactory
-import com.etbrady.alchemy.models.Class
+import com.etbrady.alchemy.models.Event
 import kotlinx.android.synthetic.main.fragment_schedule.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,7 +20,7 @@ import java.util.*
 class ScheduleFragment : Fragment(), DateListener {
 
     private var date: Date? = null
-    private val classAdapter = ClassAdapter()
+    private val eventAdapter = EventAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,43 +31,43 @@ class ScheduleFragment : Fragment(), DateListener {
 
     override fun onResume() {
         super.onResume()
-        loadClasses()
+        loadEvents()
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_schedule, container, false)
 
-        val classesRecyclerView = view.classes_recycler_view
-        classesRecyclerView.setHasFixedSize(true)
+        val eventsRecyclerView = view.events_recycler_view
+        eventsRecyclerView.setHasFixedSize(true)
 
         val layoutManager = LinearLayoutManager(context)
-        classesRecyclerView.layoutManager = layoutManager
+        eventsRecyclerView.layoutManager = layoutManager
 
-        classesRecyclerView.adapter = classAdapter
+        eventsRecyclerView.adapter = eventAdapter
 
         return view
     }
 
     override fun setDate(date: Date) {
         this.date = date
-        loadClasses()
+        loadEvents()
     }
 
-    private fun loadClasses() {
+    private fun loadEvents() {
         val currentDateStringPair = getSetDateStringPair()
         val alchemyAPI = AlchemyFrontDeskAPIFactory.createAlchemyFrontDeskAPIInstance(context)
-        val call = alchemyAPI.getClasses(currentDateStringPair.first, currentDateStringPair.second)
-        call.enqueue(object: Callback<List<Class>> {
-            override fun onResponse(call: Call<List<Class>>?, response: Response<List<Class>>?) {
+        val call = alchemyAPI.getEvents(currentDateStringPair.first, currentDateStringPair.second)
+        call.enqueue(object: Callback<List<Event>> {
+            override fun onResponse(call: Call<List<Event>>?, response: Response<List<Event>>?) {
                 if (response != null) {
-                    val classes = response.body()
-                    val sortedClasses = classes.sortedBy { it.startDate }
-                    classAdapter.setClasses(sortedClasses)
+                    val events = response.body()
+                    val sortedEvents = events.sortedBy { it.startDate }
+                    eventAdapter.setEvents(sortedEvents)
                 }
             }
 
-            override fun onFailure(call: Call<List<Class>>?, t: Throwable?) {
+            override fun onFailure(call: Call<List<Event>>?, t: Throwable?) {
                 print("On Failure!")
             }
         })

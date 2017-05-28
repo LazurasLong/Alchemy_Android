@@ -5,42 +5,42 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.etbrady.alchemy.R
-import com.etbrady.alchemy.models.Class
-import kotlinx.android.synthetic.main.card_view_class.view.*
+import com.etbrady.alchemy.models.Event
+import kotlinx.android.synthetic.main.card_view_event.view.*
 
-class ClassAdapter: RecyclerView.Adapter<ClassAdapter.ViewHolder>() {
+class EventAdapter : RecyclerView.Adapter<EventAdapter.ViewHolder>() {
 
 
-    val classes: MutableList<Class> = arrayListOf()
+    val events: MutableList<Event> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ViewHolder(layoutInflater.inflate(R.layout.card_view_class, parent, false))
+        return ViewHolder(layoutInflater.inflate(R.layout.card_view_event, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindClass(classes[position])
+        holder.bindClass(events[position])
     }
 
     override fun getItemCount(): Int {
-        return classes.size
+        return events.size
     }
 
-    fun setClasses(newClasses: List<Class>) {
-        classes.clear()
-        classes.addAll(newClasses)
+    fun setEvents(newEvents: List<Event>) {
+        events.clear()
+        events.addAll(newEvents)
         notifyDataSetChanged()
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bindClass(c: Class) {
+        fun bindClass(c: Event) {
             itemView.name_textView.text = c.name
             itemView.instructorName_textView.text = c.instructorName
             itemView.time_textView.text = getFormattedTime(c)
             itemView.location_textView.text = c.locationName
         }
 
-        private fun getFormattedTime(c: Class): String {
+        private fun getFormattedTime(c: Event): String {
             return c.getStartDateString() + " - " + c.getEndDateString()
         }
     }
